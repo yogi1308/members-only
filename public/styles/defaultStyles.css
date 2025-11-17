@@ -76,14 +76,12 @@ button {
   font-weight: 700;
 }
 
-.btn:hover {
-  background: #6a4cd9;
-}
-
-
 input {
   height: 2.5rem;
   border-radius: 0.5rem;
   border: 1px solid gray;
   background-color: #0e1217;
+  color: white;
+  padding: 0px 0.5rem;
+  font-size: 1rem;
 }
