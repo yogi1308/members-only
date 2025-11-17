@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sign Up</title>
+    <link rel='stylesheet' href='styles/defaultStyles.css' />
+    <link rel='stylesheet' href='styles/signupStyles.css' />
+  </head>
+  <body>
+    <div class="signup-div">
+        <h1>Create a new account</h1>
+        <form action="/login" method="POST" class="signup-form">
+            <div class="input-div">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-div">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="input-div">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+          <button type="submit">Login</button>
+        </form>
+        <p>Already have an account? <a href="/login">Sign up</a></p>
+    </div>
+  </body>
+</html>
