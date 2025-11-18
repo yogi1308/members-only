@@ -16,10 +16,12 @@ router.get("/signup", async (req, res) => {
 
 router.post("/signup", async(req, res) => {
     try {
-        quesryStatus = insertUsername(req.body.username, req.body.password)
+        await insertUsername(req.body.username, req.body.password)
+        res.redirect("/login");
     }
-    finally {
-        res.render("signup-form");
+    catch (error) {
+        console.error(error);
+        res.redirect("/signup");
     }
 })
 

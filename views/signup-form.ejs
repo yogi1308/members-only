@@ -8,22 +8,45 @@
   <body>
     <div class="signup-div">
         <h1>Create a new account</h1>
-        <form action="/signup" method="POST" class="signup-form">
+        <form action="/signup" method="POST" class="signup-form" autocomplete="off">
             <div class="input-div">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="input-div">
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" autocomplete="new-password" required>
             </div>
             <div class="input-div">
                 <label for="confirm_password">Confirm Password:</label>
-                <input type="password" id="confirm_password" name="confirm_password" required>
+                <input type="password" id="confirm_password" name="confirm_password" autocomplete="new-password" oninput="checkPasswordMatch()" required>
             </div>
-          <button type="submit">Login</button>
+          <button type="submit" disabled>Sign up</button>
         </form>
         <p>Already have an account? <a href="/login">Login</a></p>
     </div>
+    <script>
+      function validatePasssword() {
+
+      }
+      
+      function checkPasswordMatch() {
+        pass = document.getElementById('password').value
+        confirmPassElem = document.getElementById('confirm_password')
+        confirmPass = document.getElementById('confirm_password').value
+        submitButton = document.querySelector('button')
+        if (pass === confirmPass) {
+          confirmPassElem.style.border = '1px solid green'
+          confirmPassElem.style.outline = '1px solid green'
+          submitButton.disabled = false;
+          submitButton.style.cursor = 'pointer'
+        }
+        else {
+          confirmPassElem.style.border = '1px solid red'
+          confirmPassElem.style.outline = '1px solid red'
+          submitButton.disabled = true;
+        }
+      }
+    </script>
   </body>
 </html>
