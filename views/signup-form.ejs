@@ -15,7 +15,8 @@
             </div>
             <div class="input-div">
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" autocomplete="new-password" required>
+                <input type="password" id="password" name="password" autocomplete="new-password" onblur="document.querySelector('.validate').style.display = 'none'" onfocus="document.querySelector('.validate').style.display = 'block'" required>
+                <p class="validate">sdfsdfs</p>
             </div>
             <div class="input-div">
                 <label for="confirm_password">Confirm Password:</label>
@@ -29,7 +30,7 @@
       function validatePasssword() {
 
       }
-      
+
       function checkPasswordMatch() {
         pass = document.getElementById('password').value
         confirmPassElem = document.getElementById('confirm_password')
