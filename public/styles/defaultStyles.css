@@ -5,6 +5,10 @@ body {
   color: #f4f4f9;
 }
 
+p, h1, h2, h3, h4, h5, h6 {
+  margin: 0px;
+}
+
 header {
   background: #1c2a3a;
   padding: 1rem 0;
@@ -88,7 +92,6 @@ navbar > h1 {
 
 .post {
   width: 60vw;
-  min-height: 15rem;
   border: 1px solid gray;
   border-radius: 10px;
   padding: 1rem;
@@ -119,4 +122,9 @@ navbar > h1 {
 
 .post-when {
   color: gray;
+}
+
+.post-heading {
+  font-size: 1.75rem;
+  margin-bottom: 5px;
 }
