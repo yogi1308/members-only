@@ -1,6 +1,8 @@
 const express = require("express")
 const router = express.Router()
 const {insertUsername} = require("../db/pool")
+const bcrypt = require("bcryptjs")
+const passport = require("passport");
 
 router.get("/", async (req, res) => {
     res.render("index", { user: req.user });
@@ -16,12 +18,13 @@ router.get("/signup", async (req, res) => {
 
 router.post("/signup", async(req, res) => {
     try {
-        await insertUsername(req.body.username, req.body.password)
+        const hashedPassword = await bcrypt.hash(req.body.password, 10)
+        await insertUsername(req.body.username, hashedPassword)
         res.redirect("/");
     }
     catch (error) {
         console.error(error);
-        return next(err);
+        return next(error);
     }
 })
 

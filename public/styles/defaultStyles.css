@@ -40,6 +40,7 @@ button {
   border: none;
   font-size: 1.2rem;
   font-weight: 700;
+  cursor: pointer;
 }
 
 input {
@@ -69,11 +70,12 @@ navbar {
   margin-top: 10px;
 }
 
-.nav-buttons > button {
+.nav-buttons > button, .nav-buttons > a > button {
   width: max-content;
   padding: 0 2rem;
   font-weight: 200;
   margin-top: 0;
+  align-self: flex-end;
 }
 
 navbar > h1 {

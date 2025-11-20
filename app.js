@@ -4,6 +4,7 @@ const path = require("node:path")
 const indexRouter = require('./routes/index')
 const session = require("express-session");
 const passport = require("passport");
+require('./config/passport')(passport)
 
 const app = express()
 

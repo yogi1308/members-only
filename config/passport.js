@@ -1,35 +1,46 @@
-const {findUser} = require("../db/pool")
+const {findUser, findUserById} = require("../db/pool")
+const bcrypt = require("bcryptjs")
+const LocalStrategy = require('passport-local').Strategy;
 
-passport.use(
-  new LocalStrategy(async (username, password, done) => {
+module.exports = function(passport) {
+    passport.use(
+    new LocalStrategy(async (username, password, done) => {
+        try {
+        const { rows } = await findUser(username);
+        const user = rows[0];
+
+        if (!user) {
+            console.log("Incorrect username")
+            return done(null, false, { message: "Incorrect username" });
+        }
+        let match = false
+        for (i = 0; i < rows.length; ++i) {
+            match = await bcrypt.compare(password, rows[i].password)
+            if (match) {break}
+        }
+        if (!match) {
+            console.log("Incorrect password")
+            return done(null, false, { message: "Incorrect password" });
+        }
+        return done(null, user);
+        } catch(err) {
+        return done(err);
+        }
+    })
+    );
+
+    passport.serializeUser((user, done) => {
+    done(null, user.id);
+    });
+
+    passport.deserializeUser(async (id, done) => {
     try {
-      const { rows } = await findUser(username);
-      const user = rows[0];
+        const { rows } = await findUserById(id);
+        const user = rows[0];
 
-      if (!user) {
-        return done(null, false, { message: "Incorrect username" });
-      }
-      if (user.password !== password) {
-        return done(null, false, { message: "Incorrect password" });
-      }
-      return done(null, user);
+        done(null, user);
     } catch(err) {
-      return done(err);
+        done(err);
     }
-  })
-);
-
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser(async (id, done) => {
-  try {
-    const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
-    const user = rows[0];
-
-    done(null, user);
-  } catch(err) {
-    done(err);
-  }
-});
+    });
+}
