@@ -5,7 +5,10 @@ const bcrypt = require("bcryptjs")
 const passport = require("passport");
 
 router.get("/", async (req, res) => {
-    res.render("index", { user: req.user });
+    if (req.user) {
+        res.render("index", { user: req.user });
+    }
+    else {res.redirect("/login")}
 });
 
 router.get("/login", async (req, res) => {
