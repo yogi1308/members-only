@@ -14,4 +14,14 @@ async function insertUsername(username, password) {
   }
 }
 
-module.exports = {insertUsername}
+async function findUser(username) {
+  try {
+    return await pool.query("SELECT * FROM users WHERE username = $1", [username])
+  }
+  catch {
+    console.log("FAILED")
+    return "FAILED"
+  }
+}
+
+module.exports = {insertUsername, findUser}
