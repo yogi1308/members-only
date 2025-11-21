@@ -43,14 +43,14 @@ button {
   cursor: pointer;
 }
 
-input {
-  height: 2.5rem;
+input, textarea {
   border-radius: 0.5rem;
   border: 1px solid gray;
   background-color: #0e1217;
   color: white;
   padding: 0px 0.5rem;
   font-size: 1rem;
+  padding: 0.5rem;
 }
 
 navbar {
@@ -129,4 +129,42 @@ navbar > h1 {
 .post-heading {
   font-size: 1.75rem;
   margin-bottom: 5px;
+}
+
+.login-div, .signup-div, .new-post-div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 1rem;
+    width: 30vw;
+    min-width: fit-content;
+    align-items: center;
+}
+
+.login-form, .signup-form, .new-post-form {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.input-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.new-post-div {
+  justify-self: center;
+  margin-top: 2rem;
+}
+
+.buttons-div {
+  display: flex;
+  gap: 1rem;
+}
+
+.buttons-div > * {
+  flex: 1;
 }

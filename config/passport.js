@@ -39,7 +39,8 @@ module.exports = function(passport) {
         const user = rows[0];
 
         done(null, user);
-    } catch(err) {
+    } 
+    catch(err) {
         done(err);
     }
     });

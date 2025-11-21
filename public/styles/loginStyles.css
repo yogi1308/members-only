@@ -5,26 +5,3 @@ body {
     place-content: center;
     align-items: center;
 }
-
-.login-div {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    border: 1px solid gray;
-    border-radius: 10px;
-    padding: 1rem;
-    min-width: 30vw;
-    align-items: center;
-}
-
-.login-form {
-    align-self: stretch;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.input-div {
-    display: flex;
-    flex-direction: column;
-}

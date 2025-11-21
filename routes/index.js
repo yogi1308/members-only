@@ -6,13 +6,20 @@ const passport = require("passport");
 
 router.get("/", async (req, res) => {
     if (req.user) {
-        res.render("index", { user: req.user });
+        res.render("index", { user: req.user, page: "index" });
     }
     else {res.redirect("/login")}
 });
 
 router.get("/login", async (req, res) => {
     res.render("login-form");
+});
+
+router.get("/new-post", async (req, res) => {
+    if (req.user) {
+        res.render("index", { user: req.user, page: "new-post" });
+    }
+    else {res.redirect("/login")}
 });
 
 router.get("/signup", async (req, res) => {
