@@ -1,18 +1,24 @@
 const express = require("express")
 const router = express.Router()
-const {insertUsername, createPosts, getAllPosts} = require("../db/pool")
+const {insertUsername, createPosts, getAllPosts, displayPosted} = require("../db/pool")
 const bcrypt = require("bcryptjs")
 const passport = require("passport");
 
 router.get("/", async (req, res) => {
     if (req.user) {
         try {
-            posts = await getAllPosts()
-            res.render("index", { user: req.user, page: "index", allPosts: posts.rows });
+            const postsResult = await getAllPosts();
+            const allPosts = postsResult.rows.map(post => {
+                return {
+                    ...post,
+                    displayDate: displayPosted(post.date_posted)
+                };
+            });
+            res.render("index", { user: req.user, page: "index", allPosts: allPosts });
         }
         catch (error) {
             console.error(error);
-            res.render("index", { user: req.user, page: "index", allPosts: "Unable to get Posts" });
+            res.render("index", { user: req.user, page: "index", allPosts: [] }); // Send empty array on error
         }
     }
     else {res.redirect("/login")}
