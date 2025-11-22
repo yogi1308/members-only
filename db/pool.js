@@ -36,12 +36,22 @@ async function findUserById(id) {
 
 async function createPosts(title, content, userId) {
   try {
-    return await pool.query("INSERT INTO posts (title, content, userId) VALUES ($1, $2, $3)", [title, content, userId])
+    return await pool.query("INSERT INTO posts (title, content, user_id) VALUES ($1, $2, $3)", [title, content, userId])
   }
-  catch {
-    console.log("FAILED")
+  catch (error) {
+    console.log("FAILED", error)
     return "FAILED"
   }
 }
 
-module.exports = {insertUsername, findUser, findUserById, createPosts}
+async function getAllPosts() {
+  try {
+    return await pool.query("SELECT * FROM posts")
+  }
+  catch (error) {
+    console.log("FAILED", error)
+    return "FAILED"
+  }
+}
+
+module.exports = {insertUsername, findUser, findUserById, createPosts, getAllPosts}

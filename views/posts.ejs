@@ -1,19 +1,22 @@
 <div class="all-posts">
-    <div class="post">
-        <div class="post-header">
-            <div class="logo"></div>
-            <div class="post-details">
-                <div class="name">Yogi</div>
-                <div class="post-when">5 days ago</div>
+    <% locals.allPosts.map((post) => { %>
+        <% console.log(post.title) %>
+        <div class="post">
+            <div class="post-header">
+                <div class="logo"></div>
+                <div class="post-details">
+                    <div class="name">Yogi</div>
+                    <div class="post-when">5 days ago</div>
+                </div>
+            </div>
+            <div class="post-text">
+                <h3 class="post-heading">
+                    <%= post.title %>
+                </h3>
+                <div class="post-body">
+                    <%= post.content %>
+                </div>
             </div>
         </div>
-        <div class="post-text">
-            <h3 class="post-heading">
-                Greetings!!
-            </h3>
-            <div class="post-body">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique natus ullam perspiciatis corrupti est hic, quis suscipit quo magnam officia! Itaque molestiae laudantium, voluptate modi illum ex voluptatibus totam deserunt. Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia asperiores optio sit? Assumenda quod, unde excepturi nemo necessitatibus deserunt, et ipsam aut libero velit ipsa dolore, minus tempore reiciendis eligendi.
-            </div>
-        </div>
-    </div>
+    <% }) %>
 </div>

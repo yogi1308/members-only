@@ -9,7 +9,7 @@
 <body>
     <%- include('navbar') %>
     <% if (locals.page === "index") { %>
-        <%- include('posts') %>
+        <%- include('posts', {allPosts: allPosts}) %>
     <% } %>
     <% if (locals.page === "new-post") { %>
         <%- include('new-post') %>

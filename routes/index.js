@@ -1,12 +1,19 @@
 const express = require("express")
 const router = express.Router()
-const {insertUsername, createPosts} = require("../db/pool")
+const {insertUsername, createPosts, getAllPosts} = require("../db/pool")
 const bcrypt = require("bcryptjs")
 const passport = require("passport");
 
 router.get("/", async (req, res) => {
     if (req.user) {
-        res.render("index", { user: req.user, page: "index" });
+        try {
+            posts = await getAllPosts()
+            res.render("index", { user: req.user, page: "index", allPosts: posts.rows });
+        }
+        catch (error) {
+            console.error(error);
+            res.render("index", { user: req.user, page: "index", allPosts: "Unable to get Posts" });
+        }
     }
     else {res.redirect("/login")}
 });
@@ -22,10 +29,11 @@ router.get("/new-post", async (req, res) => {
     else {res.redirect("/login")}
 });
 
-router.post("new-post", async(req, res) => {
+router.post("/new-post", async(req, res) => {
     if (req.user) {
+        console.log(req.body.title, req.body.content, req.user.id)
         await createPosts(req.body.title, req.body.content, req.user.id)
-        res.redirect("index", { user: req.user, page: "index" });
+        res.redirect("/");
     }
     else {res.redirect("/login")}
 })
