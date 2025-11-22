@@ -30,18 +30,18 @@ module.exports = function(passport) {
     );
 
     passport.serializeUser((user, done) => {
-    done(null, user.id);
+        done(null, user.id);
     });
 
     passport.deserializeUser(async (id, done) => {
-    try {
-        const { rows } = await findUserById(id);
-        const user = rows[0];
+        try {
+            const { rows } = await findUserById(id);
+            const user = rows[0];
 
-        done(null, user);
-    } 
-    catch(err) {
-        done(err);
-    }
+            done(null, user);
+        } 
+        catch(err) {
+            done(err);
+        }
     });
 }

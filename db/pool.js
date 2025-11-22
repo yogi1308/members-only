@@ -5,12 +5,17 @@ pool = new Pool({
 })
 
 async function insertUsername(username, password) {
+  const iconColor = generateIconColor();
   try {
-    await pool.query("INSERT INTO users (username, password) VALUES ($1, $2)", [username, password]);
+    const result = await pool.query(
+      "INSERT INTO users (username, password, icon_color) VALUES ($1, $2, $3) RETURNING *",
+      [username, password, iconColor]
+    );
+    return result.rows[0]; // Return just the user object
   }
-  catch {
-    console.log("FAILED")
-    return "FAILED"
+  catch (err) {
+    console.log("FAILED", err);
+    return null;
   }
 }
 
@@ -36,9 +41,8 @@ async function findUserById(id) {
 
 async function createPosts(title, content, userId) {
   datePosted = formatDateForDisplay(new Date)
-  iconColor = generateIconColor()
   try {
-    return await pool.query("INSERT INTO posts (title, content, date_posted, icon_color, user_id) VALUES ($1, $2, $3, $4, $5)", [title, content, datePosted, iconColor, userId])
+    return await pool.query("INSERT INTO posts (title, content, date_posted, user_id) VALUES ($1, $2, $3, $4)", [title, content, datePosted, userId])
   }
   catch (error) {
     console.log("FAILED", error)
@@ -55,7 +59,7 @@ async function getAllPosts() {
         posts.content,
         posts.user_id,
         posts.date_posted,
-        posts.icon_color,
+        users.icon_color,
         users.username
       FROM
         posts
@@ -149,7 +153,7 @@ function displayPosted(dateString) {
         const minutes = Math.floor(interval);
         return minutes === 1 ? "a minute ago" : minutes + " minutes ago";
     }
-    if (seconds < 10) return "just now";
+    if (seconds < 10) return "Just now";
     return Math.floor(seconds) + " seconds ago";
 }
 

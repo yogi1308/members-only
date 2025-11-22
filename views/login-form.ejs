@@ -12,10 +12,16 @@
           <div class="input-div">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
+            <% if (incorrect && incorrect[0] === "Incorrect username" ) { %>
+              <div class="error-message" style="color: red;"><%= incorrect[0] %></div>
+            <% } %>
           </div>
           <div class="input-div">
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
+            <% if (incorrect && incorrect[0] === "Incorrect password" ) { %>
+              <div class="error-message" style="color: red;"><%= incorrect[0] %></div>
+            <% } %>
           </div>
           <button type="submit">Login</button>
         </form>

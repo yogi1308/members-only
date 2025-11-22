@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/login", async (req, res) => {
-    res.render("login-form");
+    res.render("login-form", { incorrect: req.flash('error') });
 });
 
 router.get("/new-post", async (req, res) => {
@@ -45,26 +45,37 @@ router.post("/new-post", async(req, res) => {
 })
 
 router.get("/signup", async (req, res) => {
-    res.render("signup-form");
+    res.render("signup-form", { messages: req.flash('error') });
 });
 
-router.post("/signup", async(req, res) => {
+router.post("/signup", async(req, res, next) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        await insertUsername(req.body.username, hashedPassword)
-        res.redirect("/");
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const newUser = await insertUsername(req.body.username, hashedPassword);
+        if (!newUser) {
+            req.flash('error', 'Sign up failed, please try again. The username might be taken.');
+            return res.redirect('/signup');
+        }
+        console.log("User object being passed to req.logIn:", newUser);
+        req.logIn(newUser, (err) => {
+            if (err) { 
+                return next(err); 
+            }
+            return res.redirect("/");
+        });
     }
     catch (error) {
         console.error(error);
         return next(error);
     }
-})
+});
 
 router.post(
   "/login",
   passport.authenticate("local", {
     successRedirect: "/",
-    failureRedirect: "/login"
+    failureRedirect: "/login",
+    failureFlash: true
   })
 );
 

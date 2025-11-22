@@ -5,6 +5,7 @@ const indexRouter = require('./routes/index')
 const session = require("express-session");
 const passport = require("passport");
 require('./config/passport')(passport)
+const flash = require('connect-flash');
 
 const app = express()
 
@@ -17,6 +18,7 @@ app.set("view engine", "ejs");
 
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
 app.use(passport.session());
+app.use(flash());
 
 app.use("/", indexRouter)
 

@@ -8,6 +8,9 @@
   <body>
     <div class="signup-div">
         <h1>Create a new account</h1>
+        <% if (locals.messages && messages.length > 0) { %>
+            <div class="error-message"><%= messages[0] %></div>
+        <% } %>
         <form action="/signup" method="POST" class="signup-form" autocomplete="off">
             <div class="input-div">
                 <label for="username">Username:</label>
