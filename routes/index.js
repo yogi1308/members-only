@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const {insertUsername} = require("../db/pool")
+const {insertUsername, createPosts} = require("../db/pool")
 const bcrypt = require("bcryptjs")
 const passport = require("passport");
 
@@ -21,6 +21,14 @@ router.get("/new-post", async (req, res) => {
     }
     else {res.redirect("/login")}
 });
+
+router.post("new-post", async(req, res) => {
+    if (req.user) {
+        await createPosts(req.body.title, req.body.content, req.user.id)
+        res.redirect("index", { user: req.user, page: "index" });
+    }
+    else {res.redirect("/login")}
+})
 
 router.get("/signup", async (req, res) => {
     res.render("signup-form");
