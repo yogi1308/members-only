@@ -171,3 +171,27 @@ navbar > h1 {
 .buttons-div > * {
   flex: 1;
 }
+
+.hidden {position: relative; width: 100%;}
+
+.hidden::after {
+    content: 'Become a member to see the username and other details';
+    position: absolute;
+    background: #432e89;
+    border: 1px solid #7147ed;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    height: calc(100% - 1rem);
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(-10px) scaleX(1.03);
+    transition: all 0.3s ease-in-out;
+}
+
+.hidden:hover::after {
+    opacity: 1;
+    transform: translateY(0) scaleX(1.03);
+    background: #5a3ed8;
+    cursor: pointer;
+}

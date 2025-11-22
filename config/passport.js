@@ -10,7 +10,6 @@ module.exports = function(passport) {
         const user = rows[0];
 
         if (!user) {
-            console.log("Incorrect username")
             return done(null, false, { message: "Incorrect username" });
         }
         let match = false

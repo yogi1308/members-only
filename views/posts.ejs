@@ -1,12 +1,12 @@
 <div class="all-posts">
     <% locals.allPosts.map((post) => { %>
-        <% console.log(post.title) %>
+        <% console.log(locals.user.member) %>
         <div class="post">
             <div class="post-header">
-                <div class="logo" style="background-color: <%= post.icon_color %>;" ><%= post.username[0].toUpperCase() %></div>
-                <div class="post-details">
-                    <div class="name"><%= post.username %></div>
-                    <div class="post-when"><%= post.displayDate %></div>
+                <div class="logo" style="background-color: <%= post.icon_color %> "><%= post.username[0].toUpperCase() %></div>
+                <div class="post-details <%= locals.user.member === false ? 'hidden' : 'not-hidden' %>">
+                    <div class="name"><%= locals.user.member === false ? '***** ***' : 'post.username' %></div>
+                    <div class="post-when"><%= locals.user.member === false ? '** **** ago' : 'post.displayDate' %></div>
                 </div>
             </div>
             <div class="post-text">
