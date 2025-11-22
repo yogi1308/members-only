@@ -3,7 +3,7 @@
         <% console.log(post.title) %>
         <div class="post">
             <div class="post-header">
-                <div class="logo"></div>
+                <div class="logo" style="background-color: <%= post.icon_color %>;" ><%= post.username[0].toUpperCase() %></div>
                 <div class="post-details">
                     <div class="name"><%= post.username %></div>
                     <div class="post-when"><%= post.displayDate %></div>

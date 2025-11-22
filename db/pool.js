@@ -36,8 +36,9 @@ async function findUserById(id) {
 
 async function createPosts(title, content, userId) {
   datePosted = formatDateForDisplay(new Date)
+  iconColor = generateIconColor()
   try {
-    return await pool.query("INSERT INTO posts (title, content, date_posted, user_id) VALUES ($1, $2, $3, $4)", [title, content, datePosted, userId])
+    return await pool.query("INSERT INTO posts (title, content, date_posted, icon_color, user_id) VALUES ($1, $2, $3, $4, $5)", [title, content, datePosted, iconColor, userId])
   }
   catch (error) {
     console.log("FAILED", error)
@@ -54,6 +55,7 @@ async function getAllPosts() {
         posts.content,
         posts.user_id,
         posts.date_posted,
+        posts.icon_color,
         users.username
       FROM
         posts
@@ -149,6 +151,12 @@ function displayPosted(dateString) {
     }
     if (seconds < 10) return "just now";
     return Math.floor(seconds) + " seconds ago";
+}
+
+function generateIconColor() {
+  const randomInt = Math.floor(Math.random() * 0xFFFFFF);
+  const hex = randomInt.toString(16).padStart(6, '0');
+  return `#${hex}`;
 }
 
 module.exports = {insertUsername, findUser, findUserById, createPosts, getAllPosts, formatDateForDisplay, displayPosted}
