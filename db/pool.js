@@ -74,7 +74,6 @@ async function getAllPosts() {
   }
 }
 
-
 function formatDateForDisplay(dateObject) {
   if (!(dateObject instanceof Date)) {
     dateObject = new Date(dateObject);

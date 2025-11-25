@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Join Membership</title>
+    <link rel='stylesheet' href='styles/defaultStyles.css' />
+    <link rel='stylesheet' href='styles/loginStyles.css' />
+  </head>
+  <body style="flex-direction: column;">
+    <h1>To become a member solve the following</h1>
+    <div class="login-div">
+        <p style="margin-bottom: 0rem; font-size: 1.2rem;">Convert the triple integral to spherical coordinates and evaluate it.</p>
+        <p style="margin-bottom: 5rem; font-size: 1.2rem;">That will give you access to membership</p>
+        <div style="position: relative; font-size: 2rem;">
+            <span>
+                <span >&#8747;</span>
+                <sub>-4</sub>
+                <sup style="position: absolute; width: max-content; transform: translate(-200%, -50%);">4</sup>
+            </span>
+            <span>
+                <span >&#8747;</span>
+                <sub>
+                    <span>-
+                        &radic;<span style="text-decoration:overline;">&nbsp;16-x²&nbsp;</span>
+                    </span>
+                </sub>
+                <sup style="position: absolute; width: max-content; transform: translate(-120%, -50%);">
+                    <span>
+                        &radic;<span style="text-decoration:overline;">&nbsp;16-x²&nbsp;</span>
+                    </span>
+                </sup>
+            </span>
+            <span>
+                <span >&#8747;</span>
+                <sub>0</sub>
+                <sup style="position: absolute; width: max-content; transform: translate(-25%, -50%)">
+                    <span>
+                        &radic;<span style="text-decoration:overline;">&nbsp;16-x²-y²&nbsp;</span>
+                    </span>
+                </sup>
+            </span>
+            <span style="margin-left: 6rem;">(x² + y² + z²)<sup>-½</sup> dz dy dx</span>
+            <form action="/join-membership" method="post">
+                <input type="text" id="ans" name="ans" style="width: calc(100% - 1rem); margin-top: 5rem;"  oninput="checkPasswordMatch(this.value, this)" required>
+                <button class="submit-membership-form" type="submit" disabled>Join</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function checkPasswordMatch(value, inputElement) {
+            submitButton = document.querySelector(".submit-membership-form")
+            if (value.trim().replace(/\s+/g, "") === "16pi" || value.trim().replace(/\s+/g, "") == "16π" || value.trim().replace(/\s+/g, "") === "16*pi" || value.trim().replace(/\s+/g, "") == "16*π") {
+                inputElement.style.border = '1px solid green';
+                inputElement.style.outline = '1px solid green';
+                submitButton.disabled = false;
+                submitButton.style.cursor = 'pointer';
+            }
+            else if (!isNaN(parseInt(value, 10)) && parseInt(value, 10) >= 49 && parseInt(value, 10) <= 51) {
+                inputElement.style.border = '1px solid green';
+                inputElement.style.outline = '1px solid green';
+                submitButton.disabled = false;
+                submitButton.style.cursor = 'pointer';
+            }
+            else {
+                inputElement.style.border = '1px solid red'
+                inputElement.style.outline = '1px solid red'
+                submitButton.disabled = true;
+                submitButton.style.cursor = 'none'
+            }
+        }
+    </script>
+  </body>
+</html>

@@ -24,24 +24,26 @@ router.get("/", async (req, res) => {
     else {res.redirect("/login")}
 });
 
-router.get("/login", async (req, res) => {
+router.get("/login", (req, res) => {
     res.render("login-form", { incorrect: req.flash('error') });
 });
 
-router.get("/new-post", async (req, res) => {
+router.get("/new-post", (req, res) => {
     if (req.user) {
         res.render("index", { user: req.user, page: "new-post" });
     }
     else {res.redirect("/login")}
 });
 
-router.post("/new-post", async(req, res) => {
-    if (req.user) {
-        console.log(req.body.title, req.body.content, req.user.id)
-        await createPosts(req.body.title, req.body.content, req.user.id)
-        res.redirect("/");
-    }
-    else {res.redirect("/login")}
+router.get("/logout", (req, res, next) => {
+    req.logout((err) => {
+        if (err) {return err}
+        res.redirect("/login")
+    })
+})
+
+router.get("/join-membership", (req, res) => {
+    res.render("join-membership")
 })
 
 router.get("/signup", async (req, res) => {
@@ -79,11 +81,13 @@ router.post(
   })
 );
 
-router.get("/logout", (req, res, next) => {
-    req.logout((err) => {
-        if (err) {return err}
-        res.redirect("/login")
-    })
+router.post("/new-post", async(req, res) => {
+    if (req.user) {
+        console.log(req.body.title, req.body.content, req.user.id)
+        await createPosts(req.body.title, req.body.content, req.user.id)
+        res.redirect("/");
+    }
+    else {res.redirect("/login")}
 })
 
 module.exports = router
