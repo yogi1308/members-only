@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const {insertUsername, createPosts, getAllPosts, displayPosted} = require("../db/pool")
+const {insertUsername, createPosts, getAllPosts, displayPosted, changeMembershipStatus} = require("../db/pool")
 const bcrypt = require("bcryptjs")
 const passport = require("passport");
 
@@ -72,8 +72,7 @@ router.post("/signup", async(req, res, next) => {
     }
 });
 
-router.post(
-  "/login",
+router.post("/login",
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",
@@ -83,8 +82,15 @@ router.post(
 
 router.post("/new-post", async(req, res) => {
     if (req.user) {
-        console.log(req.body.title, req.body.content, req.user.id)
         await createPosts(req.body.title, req.body.content, req.user.id)
+        res.redirect("/");
+    }
+    else {res.redirect("/login")}
+})
+
+router.post("/join-membership", async(req, res) => {
+    if (req.user) {
+        await changeMembershipStatus(req.user.id)
         res.redirect("/");
     }
     else {res.redirect("/login")}

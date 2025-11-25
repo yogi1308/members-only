@@ -74,6 +74,19 @@ async function getAllPosts() {
   }
 }
 
+async function changeMembershipStatus(userId) {
+  try {
+    await pool.query(`
+      UPDATE users
+        SET member = TRUE
+        WHERE id = $1
+    ;`, [userId])
+  }
+  catch (error) {
+    console.error("FAILED!!!", error);
+  }
+}
+
 function formatDateForDisplay(dateObject) {
   if (!(dateObject instanceof Date)) {
     dateObject = new Date(dateObject);
@@ -162,4 +175,4 @@ function generateIconColor() {
   return `#${hex}`;
 }
 
-module.exports = {insertUsername, findUser, findUserById, createPosts, getAllPosts, formatDateForDisplay, displayPosted}
+module.exports = {insertUsername, findUser, findUserById, createPosts, getAllPosts, formatDateForDisplay, displayPosted, changeMembershipStatus}
