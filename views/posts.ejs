@@ -5,8 +5,8 @@
             <div class="post-header">
                 <div class="logo" style="background-color: <%= post.icon_color %> "><%= post.username[0].toUpperCase() %></div>
                 <div class="post-details">
-                    <div class="name"><%= locals.user.member === false ? '***** ***' : 'post.username' %></div>
-                    <div class="post-when"><%= locals.user.member === false ? '** **** ago' : 'post.displayDate' %></div>
+                    <div class="name"><%= locals.user.member === false ? '***** ***' : post.username %></div>
+                    <div class="post-when"><%= locals.user.member === false ? '** **** ago' : post.displayDate %></div>
                     <% if (locals.user.member === false) { %>
                         <span class="hidden"><a href=""><strong>Become a member</strong></a>&nbsp;to see the username and other details</span>
                     <% } %>
