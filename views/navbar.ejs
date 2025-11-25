@@ -3,5 +3,8 @@
     <div class="nav-buttons">
         <a href="/new-post"><button>New Post +</button></a>
         <a href="/logout"><button style="color: red;" >Logout</button></a>
+        <% if (!locals.user.member) {%>
+            <a href="/join-membership"><button>Join Membership</button></a>
+        <% } %>
     </div>
 </navbar>
