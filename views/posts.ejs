@@ -1,13 +1,15 @@
 <div class="all-posts">
+    <% if (!locals.user) { %> 
+        <div class="sign-up-please"><a href="/signup">Sign Up</a> to Create a New Post</div>
+    <% } %>
     <% locals.allPosts.map((post) => { %>
-        <% console.log(locals.user.member) %>
         <div class="post">
             <div class="post-header">
                 <div class="logo" style="background-color: <%= post.icon_color %> "><%= post.username[0].toUpperCase() %></div>
-                <div class="post-details">
-                    <div class="name"><%= locals.user.member === false ? '***** ***' : post.username %></div>
-                    <div class="post-when"><%= locals.user.member === false ? '** **** ago' : post.displayDate %></div>
-                    <% if (locals.user.member === false) { %>
+                <%- !locals.user || locals.user.member === false ? '<div class="post-details">' : '<div class="post-details is-member">' %>
+                    <div class="name"><%=  !locals.user ||  locals.user.member === false ? '***** ***' : post.username %></div>
+                    <div class="post-when"><%=  !locals.user ||  locals.user.member === false ? '** **** ago' : post.displayDate %></div>
+                    <% if ( !locals.user ||  locals.user.member === false) { %>
                         <span class="hidden"><a href=""><strong>Become a member</strong></a>&nbsp;to see the username and other details</span>
                     <% } %>
                 </div>

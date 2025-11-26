@@ -5,23 +5,20 @@ const bcrypt = require("bcryptjs")
 const passport = require("passport");
 
 router.get("/", async (req, res) => {
-    if (req.user) {
-        try {
-            const postsResult = await getAllPosts();
-            const allPosts = postsResult.rows.map(post => {
-                return {
-                    ...post,
-                    displayDate: displayPosted(post.date_posted)
-                };
-            });
-            res.render("index", { user: req.user, page: "index", allPosts: allPosts });
-        }
-        catch (error) {
-            console.error(error);
-            res.render("index", { user: req.user, page: "index", allPosts: [] }); // Send empty array on error
-        }
+    try {
+        const postsResult = await getAllPosts();
+        const allPosts = postsResult.rows.map(post => {
+            return {
+                ...post,
+                displayDate: displayPosted(post.date_posted)
+            };
+        });
+        res.render("index", { user: req.user, page: "index", allPosts: allPosts });
     }
-    else {res.redirect("/login")}
+    catch (error) {
+        console.error(error);
+        res.render("index", { user: req.user, page: "index", allPosts: [] }); // Send empty array on error
+    }
 });
 
 router.get("/login", (req, res) => {

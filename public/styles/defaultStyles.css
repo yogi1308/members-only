@@ -185,6 +185,10 @@ navbar > h1 {
   opacity: 0;
 }
 
+.post-details.is-member > div {
+  opacity: 1;
+}
+
 .hidden {
   position: absolute;
     background: #432e89;
@@ -205,4 +209,23 @@ navbar > h1 {
   text-decoration: underline;
   color: white;
   text-wrap: nowrap;
+}
+
+.log-out-button:hover {
+  color: red;
+}
+
+.sign-up-please {
+  background-color: #432e89;
+  border-radius: 10px;
+  border: 1px solid #9169ca;
+  width: 60vw;
+  text-align: center;
+  padding: 10px;
+}
+
+.sign-up-please > a {
+  color: white;
+  font-weight: 800;
+  text-decoration: underline;
 }
