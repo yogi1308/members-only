@@ -1,4 +1,3 @@
-const pgSession = require('connect-pg-simple')(session);
 const { Pool } = require('pg');
 
 pool = new Pool({
