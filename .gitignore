@@ -1,3 +1,2 @@
 .env
-backup.sqlbackup.sql
-.env
+backup.sql
