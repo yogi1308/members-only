@@ -49,7 +49,7 @@ router.get("/signup", async (req, res) => {
 });
 
 router.post("/signup",
-    body("username").trim().isLength({ min: 3 }).withMessage("Username is required and must be at least 3 characters long.").escape(),
+    body("username").trim().isLength({ min: 3 }).withMessage("Username is required and must be at least 3 characters long."),
     body("password").trim().isLength({ min: 5 }).withMessage("Password must be at least 5 characters long."),
     body('confirmPassword').trim().custom((value, { req }) => {
         if (value !== req.body.password) {
