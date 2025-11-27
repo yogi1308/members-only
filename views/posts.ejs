@@ -6,11 +6,11 @@
         <div class="post">
             <div class="post-header">
                 <div class="logo" style="background-color: <%= post.icon_color %> "><%= post.username[0].toUpperCase() %></div>
-                <%- !locals.user || locals.user.member === false ? '<div class="post-details">' : '<div class="post-details is-member">' %>
+                <%- (!locals.user || locals.user.member === false) && (locals.user) ? '<div class="post-details">' : '<div class="post-details is-member">' %>
                     <div class="name"><%=  !locals.user ||  locals.user.member === false ? '***** ***' : post.username %></div>
                     <div class="post-when"><%=  !locals.user ||  locals.user.member === false ? '** **** ago' : post.displayDate %></div>
-                    <% if ( !locals.user ||  locals.user.member === false) { %>
-                        <span class="hidden"><a href=""><strong>Become a member</strong></a>&nbsp;to see the username and other details</span>
+                    <% if ( (!locals.user ||  locals.user.member === false) && (locals.user)) { %>
+                        <span class="hidden"><a href="/join-membership"><strong>Become a member</strong></a>&nbsp;to see the username and other details</span>
                     <% } %>
                 </div>
             </div>

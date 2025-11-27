@@ -211,6 +211,10 @@ navbar > h1 {
   text-wrap: nowrap;
 }
 
+.log-out-button {
+  transition: 0.3s ease-in all;
+}
+
 .log-out-button:hover {
   color: red;
 }
@@ -229,3 +233,5 @@ navbar > h1 {
   font-weight: 800;
   text-decoration: underline;
 }
+
+.error-message {color: red;}

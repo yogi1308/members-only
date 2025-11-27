@@ -2,11 +2,8 @@
     <h1>Members Only!</h1>
     <div class="nav-buttons">
         <% if (locals.user) { %>
-            <a href="/new-post"><button>New Post +</button></a>
+            <a href="/new-post"><button class="log-out-button">New Post +</button></a>
             <a href="/logout"><button class="log-out-button" >Logout</button></a>
         <% } %>
-        <!-- <% if (!locals.user?.member) {%>
-            <a href="/join-membership"><button>Join Membership</button></a>
-        <% } %> -->
     </div>
 </navbar>

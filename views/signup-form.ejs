@@ -8,32 +8,34 @@
   <body>
     <div class="signup-div">
         <h1>Create a new account</h1>
-        <% if (locals.messages && messages.length > 0) { %>
-            <div class="error-message"><%= messages[0] %></div>
-        <% } %>
         <form action="/signup" method="POST" class="signup-form" autocomplete="off">
             <div class="input-div">
                 <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" name="username" value="<%= locals.userInput ? userInput.username : '' %>" required>
+                <% if (locals.errors && errors.username) { %>
+                    <div class="error-message"><%= errors.username %></div>
+                <% } %>
             </div>
             <div class="input-div">
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" autocomplete="new-password" onblur="document.querySelector('.validate').style.display = 'none'" onfocus="document.querySelector('.validate').style.display = 'block'" required>
-                <p class="validate">sdfsdfs</p>
+                <input type="password" id="password" name="password" autocomplete="new-password" required>
+                <% if (locals.errors && errors.password) { %>
+                    <div class="error-message"><%= errors.password %></div>
+                <% } %>
             </div>
             <div class="input-div">
-                <label for="confirm_password">Confirm Password:</label>
-                <input type="password" id="confirm_password" name="confirm_password" autocomplete="new-password" oninput="checkPasswordMatch()" required>
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" required>
+                <% if (locals.errors && errors.confirmPassword) { %>
+                    <% console.log(locals.errors) %>
+                    <div class="error-message"><%= errors.confirmPassword %></div>
+                <% } %>
             </div>
-          <button type="submit" disabled>Sign up</button>
+          <button type="submit">Sign up</button>
         </form>
         <p>Already have an account? <a href="/login">Login</a></p>
     </div>
     <script>
-      function validatePasssword() {
-        // TODO
-      }
-
       function checkPasswordMatch() {
         pass = document.getElementById('password').value
         confirmPassElem = document.getElementById('confirm_password')

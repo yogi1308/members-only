@@ -48,7 +48,8 @@
     <script>
         function checkPasswordMatch(value, inputElement) {
             submitButton = document.querySelector(".submit-membership-form")
-            if (value.trim().replace(/\s+/g, "") === "16pi" || value.trim().replace(/\s+/g, "") == "16π" || value.trim().replace(/\s+/g, "") === "16*pi" || value.trim().replace(/\s+/g, "") == "16*π") {
+            value = value.trim().replace(/\s+/g, "")
+            if (value === "16pi" || value == "16π" || value === "16*pi" || value == "16*π") {
                 inputElement.style.border = '1px solid green';
                 inputElement.style.outline = '1px solid green';
                 submitButton.disabled = false;

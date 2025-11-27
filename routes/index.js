@@ -3,6 +3,7 @@ const router = express.Router()
 const {insertUsername, createPosts, getAllPosts, displayPosted, changeMembershipStatus} = require("../db/pool")
 const bcrypt = require("bcryptjs")
 const passport = require("passport");
+const { body, validationResult } = require("express-validator");
 
 router.get("/", async (req, res) => {
     try {
@@ -35,7 +36,7 @@ router.get("/new-post", (req, res) => {
 router.get("/logout", (req, res, next) => {
     req.logout((err) => {
         if (err) {return err}
-        res.redirect("/login")
+        res.redirect("/")
     })
 })
 
@@ -47,26 +48,44 @@ router.get("/signup", async (req, res) => {
     res.render("signup-form", { messages: req.flash('error') });
 });
 
-router.post("/signup", async(req, res, next) => {
-    try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const newUser = await insertUsername(req.body.username, hashedPassword);
-        if (!newUser) {
-            req.flash('error', 'Sign up failed, please try again. The username might be taken.');
-            return res.redirect('/signup');
+router.post("/signup",
+    body("username").trim().isLength({ min: 3 }).withMessage("Username is required and must be at least 3 characters long.").escape(),
+    body("password").trim().isLength({ min: 5 }).withMessage("Password must be at least 5 characters long."),
+    body('confirmPassword').trim().custom((value, { req }) => {
+        if (value !== req.body.password) {
+          throw new Error('Passwords do not match');
         }
-        console.log("User object being passed to req.logIn:", newUser);
-        req.logIn(newUser, (err) => {
-            if (err) { 
-                return next(err); 
+        return true;
+      }),
+    async(req, res, next) => {
+        const errors = validationResult(req);
+        console.log(errors)
+        if (!errors.isEmpty()) {
+            const errorMessages = {};
+            errors.array().forEach(error => {
+                errorMessages[error.param] = error.msg;
+            });
+            return res.render("signup-form", { errors: errorMessages, userInput: req.body });
+        }
+
+        try {
+            const hashedPassword = await bcrypt.hash(req.body.password, 10);
+            const newUser = await insertUsername(req.body.username, hashedPassword);
+            if (!newUser) {
+                req.flash('error', 'Sign up failed, please try again. The username might be taken.');
+                return res.redirect('/signup');
             }
-            return res.redirect("/");
-        });
-    }
-    catch (error) {
-        console.error(error);
-        return next(error);
-    }
+            req.logIn(newUser, (err) => {
+                if (err) { 
+                    return next(err); 
+                }
+                return res.redirect("/");
+            });
+        }
+        catch (error) {
+            console.error(error);
+            return next(error);
+        }
 });
 
 router.post("/login",
